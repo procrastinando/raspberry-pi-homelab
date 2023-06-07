@@ -143,7 +143,7 @@ wget https://github.com/home-assistant/supervised-installer/releases/latest/down
 apt install ./homeassistant-supervised.deb
 ```
 
-4. Jellyfin
+## 4. Jellyfin
 
 Documentation here: https://jellyfin.org/docs/general/installation/linux
 
@@ -218,7 +218,7 @@ http:
 ```
 Restart Home assistant > Start Cloudflared > See cloudflared Log > Open the required URL to log into your cloudflared account
 
-8. Cloudflared
+## 8. Cloudflared
 
 Documentation here: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#set-up-a-tunnel-locally-cli-setup
 * Run the commands using  'sudo su'
