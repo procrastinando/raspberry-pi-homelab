@@ -21,9 +21,9 @@ sudo reboot
 ### 1.1. Increase SWAP memory to 1000M
 ```
 sudo nano /etc/dphys-swapfile
-
+```
 find the line that starts with CONF_SWAPSIZE and change its value from 100 to 1000
-
+```
 sudo /etc/init.d/dphys-swapfile restart
 ```
 ### 1.2. Build a kernel with apparmor:
