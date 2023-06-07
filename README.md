@@ -22,7 +22,7 @@ sudo reboot
 ```
 sudo nano /etc/dphys-swapfile
 
-find the line that starts with CONF_SWAPSIZE and change its value from 100 to 2000
+find the line that starts with CONF_SWAPSIZE and change its value from 100 to 1000
 
 sudo /etc/init.d/dphys-swapfile restart
 ```
@@ -105,14 +105,14 @@ Add These lines:
 ```
 [External disk]
 comment = Raspberry Pi external disk
-path = /media/carlos
+path = /media/ubuntu
 writeable = yes
 read-only = no
 browsable = yes
 ```
 Add a user and password
 ```
-sudo smbpasswd -a carlos
+sudo smbpasswd -a ubuntu
 sudo systemctl restart smbd.service
 ```
 
@@ -149,7 +149,7 @@ Documentation here: https://jellyfin.org/docs/general/installation/linux
 
 ```
 curl https://repo.jellyfin.org/install-debuntu.sh | sudo bash
-sudo setfacl -m u:jellyfin:rx /media/carlos
+sudo setfacl -m u:jellyfin:rx /media/ubuntu
 ```
 
 ## 5. NextCloud
@@ -191,8 +191,8 @@ docker run -d \
   -p 8080:8080 \
   -p 6881:6881 \
   -p 6881:6881/udp \
-  -v /home/carlos/QbitTorrent:/config \
-  -v /media/carlos/Big/Torrents:/downloads \
+  -v /home/ubuntu/QbitTorrent:/config \
+  -v /media/ubuntu/Big/Torrents:/downloads \
   --restart unless-stopped \
   lscr.io/linuxserver/qbittorrent:latest
 ```
@@ -205,7 +205,7 @@ Documentation: https://github.com/brenner-tobias/ha-addons
 
 * Add this addon in the Add-on store in Homeassistant: https://github.com/brenner-tobias/ha-addons
 
-* Install the addon and click configuration, "External Homeassistant Hostname: homeassistant.ibarcena.net", "Cloudflare Tunnel Name: homeassistant", save changes.
+* Install the addon and click configuration, "External Homeassistant Hostname: homeassistant.domain.com", "Cloudflare Tunnel Name: homeassistant", save changes.
 
 * Edit the file 'configuration.yaml' and add these lines:
 ```
@@ -231,9 +231,9 @@ cloudflared tunnel create raspberry
 ```
 Add DNS
 ```
-cloudflared tunnel route dns raspberry jellyfin.ibarcena.net
-cloudflared tunnel route dns raspberry nextcloud.ibarcena.net
-cloudflared tunnel route dns raspberry qbittorrent.ibarcena.net
+cloudflared tunnel route dns raspberry jellyfin.domain.com
+cloudflared tunnel route dns raspberry nextcloud.domain.com
+cloudflared tunnel route dns raspberry qbittorrent.domain.com
 ```
 ```
 nano /root/.cloudflared/config.yml
@@ -244,15 +244,15 @@ Include this information into the file:
 tunnel: 8272d213-a0a5-4ec7-b9fc-337df81f47fe
 credentials-file: /root/.cloudflared/8272d213-a0a5-4ec7-b9fc-337df81f47fe.json
 ingress:
-  - hostname: jellyfin.ibarcena.net
+  - hostname: jellyfin.domain.com
     service: http://localhost:8096
     disableChunkedEncoding: true
     noHappyEyeballs: true
-  - hostname: nextcloud.ibarcena.net
+  - hostname: nextcloud.domain.com
     service: http://localhost:82
     disableChunkedEncoding: true
     noHappyEyeballs: true
-  - hostname: qbittorrent.ibarcena.net
+  - hostname: qbittorrent.domain.com
     service: http://localhost:8080
     disableChunkedEncoding: true
     noHappyEyeballs: true
